@@ -4,9 +4,14 @@ on:
   push:
     branches: [main]
     tags:
-      - "v*" # Trigger on version tags like v0.1.0
+      - "v*"
   pull_request:
-    branches: [main] # Optional: run checks on PRs (the action will skip publishing)
+    branches: [main]
+
+# Add these permission settings
+permissions:
+  contents: write # needed for creating releases and tags
+  pull-requests: write # needed for creating release PRs
 
 jobs:
   release-plz:
@@ -16,7 +21,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Needed for changelog generation
+          fetch-depth: 0
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
