@@ -2,7 +2,10 @@
 name = "hindsight-client"
 version = "0.1.0"
 edition = "2021"
-
+authors = ["elcoosp"]                # <-- add this
+license = "MIT"                       # <-- add this
+repository = "https://github.com/elcoosp/hindsight-client"
+description = "Rust HTTP client for the Hindsight agent memory system"
 [dependencies]
 reqwest = { version = "0.13", features = ["json"] }
 serde = { version = "1", features = ["derive"] }
