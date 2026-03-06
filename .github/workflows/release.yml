@@ -1,0 +1,28 @@
+name: Release
+
+on:
+  push:
+    branches: [main]
+    tags:
+      - "v*" # Trigger on version tags like v0.1.0
+  pull_request:
+    branches: [main] # Optional: run checks on PRs (the action will skip publishing)
+
+jobs:
+  release-plz:
+    name: Release-plz
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Needed for changelog generation
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Run release-plz
+        uses: MarcoIeni/release-plz-action@v0.5
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
