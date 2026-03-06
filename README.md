@@ -1,6 +1,6 @@
 # hindsight-client
 
-Rust HTTP client for the Hindsight agent memory system.
+Rust HTTP client for the [Hindsight](https://hindsight.vectorize.io/) agent memory system.
 
 ## Usage
 
