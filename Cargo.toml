@@ -1,19 +1,51 @@
 [package]
 name = "hindsight-client"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
-authors = ["elcoosp"]                # <-- add this
-license = "MIT"                       # <-- add this
+rust-version = "1.85"
+authors = ["elcoosp"]
+license = "MIT"
 repository = "https://github.com/elcoosp/hindsight-client"
-description = "Rust HTTP client for the Hindsight agent memory system"
+homepage = "https://github.com/elcoosp/hindsight-client"
+documentation = "https://docs.rs/hindsight-client"
+description = "Fast, typed, batteries-included async Rust client for the Hindsight agent memory system (vectorize.io)"
+readme = "README.md"
+keywords = ["hindsight", "memory", "agent", "ai", "api-client"]
+categories = ["api-bindings", "asynchronous"]
+exclude = [".github/", "docs/logo.png", "*.zip"]
+
+[features]
+default = []
+# Typed structured output for `reflect` via `schemars`-derived JSON schemas.
+schemars = ["dep:schemars"]
+
 [dependencies]
-reqwest = { version = "0.13", features = ["json"] }
+reqwest = { version = "0.13", default-features = false, features = [
+    "json",
+    "multipart",
+    "rustls",
+    "gzip",
+    "brotli",
+    "charset",
+    "http2",
+] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 thiserror = "2"
 url = "2"
 tracing = "0.1"
+tokio = { version = "1", default-features = false, features = ["time"] }
+futures = { version = "0.3", default-features = false, features = ["std"] }
+schemars = { version = "1", optional = true }
 
 [dev-dependencies]
 tokio = { version = "1", features = ["full"] }
 wiremock = "0.6"
+
+[[example]]
+name = "03_structured_reflect"
+required-features = ["schemars"]
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
